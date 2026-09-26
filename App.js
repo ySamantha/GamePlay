@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Splash } from './src/screens/Splash';
+import { Login } from './src/screens/Login';
+import { Home } from './src/screens/Home';
+import { Agendar } from './src/screens/Agendar';
+import { DetalhesServidor } from './src/screens/DetalhesServidor';
 
 export default function App() {
+  const [tela, setTela] = useState('splash');
+
+  if (tela === 'splash') {
+    return <Splash onPress={() => setTela('login')} />;
+  }
+
+  if (tela === 'login') {
+    return <Login onPress={() => setTela('home')} />;
+  }
+
+  if (tela === 'agendar') {
+    return <Agendar onBack={() => setTela('home')} />;
+  }
+
+  if (tela === 'detalhes') {
+    return <DetalhesServidor onBack={() => setTela('home')} />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Home 
+      onLogout={() => setTela('splash')} 
+      onAdd={() => setTela('agendar')} 
+      onSelectMatch={() => setTela('detalhes')}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
